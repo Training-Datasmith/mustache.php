@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Mustache.php.
  *
@@ -35,16 +37,16 @@ use Psr\Log\LoggerInterface;
  */
 class Engine
 {
-    const VERSION      = '3.0.0';
-    const SPEC_VERSION = '1.4.3';
+    public const VERSION      = '3.0.0';
+    public const SPEC_VERSION = '1.4.3';
 
-    const PRAGMA_FILTERS       = 'FILTERS';
-    const PRAGMA_ANCHORED_DOT  = 'ANCHORED-DOT';
+    public const PRAGMA_FILTERS       = 'FILTERS';
+    public const PRAGMA_ANCHORED_DOT  = 'ANCHORED-DOT';
 
     /**
      * @deprecated PRAGMA_BLOCKS is now part of the Mustache spec, and is enabled by default
      */
-    const PRAGMA_BLOCKS = 'BLOCKS';
+    public const PRAGMA_BLOCKS = 'BLOCKS';
 
     // Known pragmas
     private static $knownPragmas = [

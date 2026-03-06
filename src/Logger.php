@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Mustache.php.
  *
@@ -16,14 +18,14 @@ interface Logger
     /**
      * Psr\Log compatible log levels.
      */
-    const EMERGENCY = 'emergency';
-    const ALERT     = 'alert';
-    const CRITICAL  = 'critical';
-    const ERROR     = 'error';
-    const WARNING   = 'warning';
-    const NOTICE    = 'notice';
-    const INFO      = 'info';
-    const DEBUG     = 'debug';
+    public const EMERGENCY = 'emergency';
+    public const ALERT     = 'alert';
+    public const CRITICAL  = 'critical';
+    public const ERROR     = 'error';
+    public const WARNING   = 'warning';
+    public const NOTICE    = 'notice';
+    public const INFO      = 'info';
+    public const DEBUG     = 'debug';
 
     /**
      * System is unusable.

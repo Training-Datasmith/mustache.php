@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of Mustache.php.
  *
@@ -80,7 +82,7 @@ class FiltersTest extends TestCase
         $this->assertSame('[[2000-01-01 12:01:00]]', $tpl->render($foo));
     }
 
-    const CHAINED_SECTION_FILTERS_TPL = <<<'EOS'
+    public const CHAINED_SECTION_FILTERS_TPL = <<<'EOS'
 {{% FILTERS }}
 {{# word | echo | with_index }}
 {{ key }}: {{ value }}
