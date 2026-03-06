@@ -39,8 +39,8 @@ class StreamLogger extends AbstractLogger
     ];
 
     protected $level;
-    protected $stream = null;
-    protected $url    = null;
+    protected $stream;
+    protected $url;
 
     /**
      * @throws InvalidArgumentException if the logging level is unknown

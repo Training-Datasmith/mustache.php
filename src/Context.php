@@ -175,7 +175,7 @@ class Context
      *
      * @return mixed Variable value, or '' if not found
      */
-    public function findAnchoredDot($id)
+    public function findAnchoredDot(string $id)
     {
         $chunks = explode('.', $id);
         $first  = array_shift($chunks);

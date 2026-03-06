@@ -157,7 +157,6 @@ class Compiler
                     $code .= $this->parent(
                         $node[Tokenizer::NAME],
                         isset($node[Tokenizer::DYNAMIC]) ? $node[Tokenizer::DYNAMIC] : false,
-                        isset($node[Tokenizer::INDENT]) ? $node[Tokenizer::INDENT] : '',
                         $node[Tokenizer::NODES],
                         $level
                     );
@@ -167,10 +166,6 @@ class Compiler
                     $code .= $this->blockArg(
                         $node[Tokenizer::NODES],
                         $node[Tokenizer::NAME],
-                        $node[Tokenizer::INDEX],
-                        $node[Tokenizer::END],
-                        $node[Tokenizer::OTAG],
-                        $node[Tokenizer::CTAG],
                         $level
                     );
                     break;
@@ -179,10 +174,6 @@ class Compiler
                     $code .= $this->blockVar(
                         $node[Tokenizer::NODES],
                         $node[Tokenizer::NAME],
-                        $node[Tokenizer::INDEX],
-                        $node[Tokenizer::END],
-                        $node[Tokenizer::OTAG],
-                        $node[Tokenizer::CTAG],
                         $level
                     );
                     break;
@@ -283,15 +274,11 @@ class Compiler
      *
      * @param array  $nodes Array of child tokens
      * @param string $id    Section name
-     * @param int    $start Section start offset
-     * @param int    $end   Section end offset
-     * @param string $otag  Current Mustache opening tag
-     * @param string $ctag  Current Mustache closing tag
      * @param int    $level
      *
      * @return string Generated PHP source code
      */
-    private function blockVar(array $nodes, $id, $start, $end, $otag, $ctag, $level)
+    private function blockVar(array $nodes, $id, $level)
     {
         $id = var_export($id, true);
 
@@ -310,15 +297,11 @@ class Compiler
      *
      * @param array  $nodes Array of child tokens
      * @param string $id    Section name
-     * @param int    $start Section start offset
-     * @param int    $end   Section end offset
-     * @param string $otag  Current Mustache opening tag
-     * @param string $ctag  Current Mustache closing tag
      * @param int    $level
      *
      * @return string Generated PHP source code
      */
-    private function blockArg($nodes, $id, $start, $end, $otag, $ctag, $level)
+    private function blockArg(array $nodes, $id, $level)
     {
         $key = $this->block($nodes);
         $id = var_export($id, true);
@@ -564,13 +547,11 @@ class Compiler
      *
      * @param string $id       Parent tag name
      * @param bool   $dynamic  Tag name is dynamic
-     * @param string $indent   Whitespace indent to apply to parent
      * @param array  $children Child nodes
      * @param int    $level
-     *
      * @return string Generated PHP source code
      */
-    private function parent($id, $dynamic, $indent, array $children, $level)
+    private function parent($id, $dynamic, array $children, $level)
     {
         $realChildren = array_filter($children, [self::class, 'onlyBlockArgs']);
         $partialName = $this->resolveDynamicName($id, $dynamic);

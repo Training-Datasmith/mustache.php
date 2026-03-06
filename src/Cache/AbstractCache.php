@@ -25,7 +25,7 @@ use Psr\Log\LoggerInterface;
  */
 abstract class AbstractCache implements Cache
 {
-    private $logger = null;
+    private $logger;
 
     /**
      * Get the current logger instance.

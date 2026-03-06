@@ -51,7 +51,7 @@ class FilesystemLoader implements Loader
      * @param string $baseDir Base directory containing Mustache template files
      * @param array  $options Loader options (default: [])
      */
-    public function __construct($baseDir, array $options = [])
+    public function __construct(string $baseDir, array $options = [])
     {
         $this->baseDir = $baseDir;
 
@@ -114,14 +114,13 @@ class FilesystemLoader implements Loader
     /**
      * Helper function for getting a Mustache template file name.
      *
-     * @param string $name
      *
      * @return string Template file name
      */
-    protected function getFileName($name)
+    protected function getFileName(string $name)
     {
         $fileName = $this->baseDir . '/' . $name;
-        if (substr($fileName, 0 - strlen($this->extension)) !== $this->extension) {
+        if (substr($fileName, -strlen($this->extension)) !== $this->extension) {
             $fileName .= $this->extension;
         }
 
