@@ -776,7 +776,7 @@ class Engine
             $key .= "\n" . $source;
         }
 
-        return $this->templateClassPrefix . md5($key);
+        return $this->templateClassPrefix . hash('sha256', $key);
     }
 
     /**

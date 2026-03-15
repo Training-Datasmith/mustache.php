@@ -207,7 +207,7 @@ class Context
      */
     public function findInBlock($id)
     {
-        foreach ($this->blockStack as $context) {
+        foreach (array_reverse($this->blockStack) as $context) {
             if (array_key_exists($id, $context)) {
                 return $context[$id];
             }
@@ -229,7 +229,7 @@ class Context
     private function findVariableInStack($id, array $stack)
     {
         for ($i = count($stack) - 1; $i >= 0; $i--) {
-            $frame = &$stack[$i];
+            $frame = $stack[$i];
 
             switch (gettype($frame)) {
                 case 'object':
@@ -237,7 +237,10 @@ class Context
                         // Note that is_callable() *will not work here*
                         // See https://github.com/bobthecow/mustache.php/wiki/Magic-Methods
                         if (method_exists($frame, $id)) {
-                            return $frame->$id();
+                            $rm = new \ReflectionMethod($frame, $id);
+                            if ($rm->isPublic()) {
+                                return $frame->$id();
+                            }
                         }
 
                         if (isset($frame->$id)) {

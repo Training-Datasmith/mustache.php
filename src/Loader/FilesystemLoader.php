@@ -126,6 +126,12 @@ class FilesystemLoader implements Loader
             $fileName .= $this->extension;
         }
 
+        $realBase = realpath($this->baseDir);
+        $realFile = realpath($fileName);
+        if ($realBase !== false && $realFile !== false && strncmp($realFile, $realBase . DIRECTORY_SEPARATOR, strlen($realBase) + 1) !== 0) {
+            throw new UnknownTemplateException($name);
+        }
+
         return $fileName;
     }
 

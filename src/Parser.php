@@ -311,9 +311,9 @@ class Parser
      *
      * @param array|null $parent
      */
-    private function checkIfTokenIsAllowedInParent(array $parent, array $token)
+    private function checkIfTokenIsAllowedInParent(?array $parent, array $token)
     {
-        if ($parent[Tokenizer::TYPE] === Tokenizer::T_PARENT) {
+        if ($parent !== null && $parent[Tokenizer::TYPE] === Tokenizer::T_PARENT) {
             throw new SyntaxException('Illegal content in < parent tag', $token);
         }
     }

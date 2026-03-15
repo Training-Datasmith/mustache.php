@@ -162,6 +162,7 @@ class FilesystemCache extends AbstractCache
         }
 
         // @codeCoverageIgnoreStart
+        @unlink($tempFile);
         throw new RuntimeException(sprintf('Failed to write cache file "%s".', $fileName));
         // @codeCoverageIgnoreEnd
     }
