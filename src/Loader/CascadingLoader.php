@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,20 +9,17 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache\Loader;
 
-use Mustache\Exception\UnknownTemplateException;
+use Mustache\Exception\Unknown_Template_Exception;
 use Mustache\Loader;
-
 /**
  * A Mustache Template cascading loader implementation, which delegates to other
  * Loader instances.
  */
-class CascadingLoader implements Loader
+class Cascading_Loader implements Loader
 {
     private $loaders;
-
     /**
      * Construct a CascadingLoader with an array of loaders.
      *
@@ -38,18 +34,16 @@ class CascadingLoader implements Loader
     {
         $this->loaders = [];
         foreach ($loaders as $loader) {
-            $this->addLoader($loader);
+            $this->add_loader($loader);
         }
     }
-
     /**
      * Add a Loader instance.
      */
-    public function addLoader(Loader $loader)
+    public function add_loader(Loader $loader)
     {
         $this->loaders[] = $loader;
     }
-
     /**
      * Load a Template by name.
      *
@@ -64,11 +58,10 @@ class CascadingLoader implements Loader
         foreach ($this->loaders as $loader) {
             try {
                 return $loader->load($name);
-            } catch (UnknownTemplateException $e) {
+            } catch (Unknown_Template_Exception $e) {
                 // do nothing, check the next loader.
             }
         }
-
-        throw new UnknownTemplateException($name);
+        throw new Unknown_Template_Exception($name);
     }
 }

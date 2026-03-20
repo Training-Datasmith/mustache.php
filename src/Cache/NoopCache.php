@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,18 +9,16 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache\Cache;
 
 use Mustache\Logger;
-
 /**
  * Mustache Cache in-memory implementation.
  *
  * The in-memory cache is used for uncached lambda section templates. It's also useful during development, but is not
  * recommended for production use.
  */
-class NoopCache extends AbstractCache
+class Noop_Cache extends Abstract_Cache
 {
     /**
      * Loads nothing. Move along.
@@ -34,7 +31,6 @@ class NoopCache extends AbstractCache
     {
         return false;
     }
-
     /**
      * Loads the compiled Mustache Template class without caching.
      *
@@ -43,11 +39,7 @@ class NoopCache extends AbstractCache
      */
     public function cache($key, $value)
     {
-        $this->log(
-            Logger::WARNING,
-            'Template cache disabled, evaluating "{className}" class at runtime',
-            ['className' => $key]
-        );
+        $this->log(Logger::WARNING, 'Template cache disabled, evaluating "{className}" class at runtime', ['className' => $key]);
         eval('?>' . $value);
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,14 +9,12 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache\Loader;
 
 use Mustache\Exception\RuntimeException;
-use Mustache\Exception\UnknownTemplateException;
+use Mustache\Exception\Unknown_Template_Exception;
 use Mustache\Source;
-use Mustache\Source\FilesystemSource;
-
+use Mustache\Source\Filesystem_Source;
 /**
  * Mustache Template production filesystem Loader implementation.
  *
@@ -25,10 +22,9 @@ use Mustache\Source\FilesystemSource;
  *
  * {@inheritdoc}
  */
-class ProductionFilesystemLoader extends FilesystemLoader
+class Production_Filesystem_Loader extends Filesystem_Loader
 {
-    private $statProps;
-
+    private $stat_props;
     /**
      * Mustache production filesystem Loader constructor.
      *
@@ -58,21 +54,19 @@ class ProductionFilesystemLoader extends FilesystemLoader
      * @param string $baseDir base directory containing Mustache template files
      * @param array  $options Loader options (default: [])
      */
-    public function __construct($baseDir, array $options = [])
+    public function __construct($base_dir, array $options = [])
     {
-        parent::__construct($baseDir, $options);
-
+        parent::__construct($base_dir, $options);
         if (array_key_exists('stat_props', $options)) {
             if (empty($options['stat_props'])) {
-                $this->statProps = [];
+                $this->stat_props = [];
             } else {
-                $this->statProps = $options['stat_props'];
+                $this->stat_props = $options['stat_props'];
             }
         } else {
-            $this->statProps = ['size', 'mtime'];
+            $this->stat_props = ['size', 'mtime'];
         }
     }
-
     /**
      * Helper function for loading a Mustache file by name.
      *
@@ -82,14 +76,12 @@ class ProductionFilesystemLoader extends FilesystemLoader
      *
      * @return Source Mustache Template source
      */
-    protected function loadFile($name)
+    protected function load_file($name)
     {
-        $fileName = $this->getFileName($name);
-
-        if (!file_exists($fileName)) {
-            throw new UnknownTemplateException($name);
+        $file_name = $this->get_file_name($name);
+        if (!file_exists($file_name)) {
+            throw new Unknown_Template_Exception($name);
         }
-
-        return new FilesystemSource($fileName, $this->statProps);
+        return new Filesystem_Source($file_name, $this->stat_props);
     }
 }

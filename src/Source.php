@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,7 +9,6 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache;
 
 interface Source
@@ -28,8 +26,7 @@ interface Source
      *
      * @return string
      */
-    public function getKey();
-
+    public function get_key();
     /**
      * Get the template Source.
      *
@@ -37,5 +34,5 @@ interface Source
      *
      * @return string
      */
-    public function getSource();
+    public function get_source();
 }

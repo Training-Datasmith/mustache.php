@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,7 +9,6 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache;
 
 /**
@@ -22,10 +20,9 @@ namespace Mustache;
  * @see LambdaHelper::render()
  * @see LambdaHelper::preventRender()
  */
-class RenderedString
+class Rendered_String
 {
     private $value;
-
     /**
      * RenderedString constructor.
      *
@@ -35,18 +32,16 @@ class RenderedString
     {
         $this->value = (string) $value;
     }
-
     public function __toString()
     {
         return $this->value;
     }
-
     /**
      * Get the rendered string value.
      *
      * @return string The rendered string value
      */
-    public function getValue()
+    public function get_value()
     {
         return $this->value;
     }

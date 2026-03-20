@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,13 +9,11 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache\Loader;
 
 use Mustache\Exception\RuntimeException;
-use Mustache\Exception\UnknownTemplateException;
+use Mustache\Exception\Unknown_Template_Exception;
 use Mustache\Loader;
-
 /**
  * Mustache Template filesystem Loader implementation.
  *
@@ -32,12 +29,11 @@ use Mustache\Loader;
  *          'partials_loader' => new FilesystemLoader(__DIR__.'/views/partials'),
  *     ]);
  */
-class FilesystemLoader implements Loader
+class Filesystem_Loader implements Loader
 {
-    private $baseDir;
+    private $base_dir;
     private $extension = '.mustache';
     private $templates = [];
-
     /**
      * Mustache filesystem Loader constructor.
      *
@@ -53,18 +49,15 @@ class FilesystemLoader implements Loader
      * @param string $baseDir Base directory containing Mustache template files
      * @param array  $options Loader options (default: [])
      */
-    public function __construct(string $baseDir, array $options = [])
+    public function __construct(string $base_dir, array $options = [])
     {
-        $this->baseDir = $baseDir;
-
-        if (strpos($this->baseDir, '://') === false) {
-            $this->baseDir = realpath($this->baseDir);
+        $this->base_dir = $base_dir;
+        if (strpos($this->base_dir, '://') === false) {
+            $this->base_dir = realpath($this->base_dir);
         }
-
-        if ($this->shouldCheckPath() && !is_dir($this->baseDir)) {
-            throw new RuntimeException(sprintf('FilesystemLoader baseDir must be a directory: %s', $baseDir));
+        if ($this->should_check_path() && !is_dir($this->base_dir)) {
+            throw new RuntimeException(sprintf('FilesystemLoader baseDir must be a directory: %s', $base_dir));
         }
-
         if (array_key_exists('extension', $options)) {
             if (empty($options['extension'])) {
                 $this->extension = '';
@@ -73,7 +66,6 @@ class FilesystemLoader implements Loader
             }
         }
     }
-
     /**
      * Load a Template by name.
      *
@@ -87,12 +79,10 @@ class FilesystemLoader implements Loader
     public function load($name)
     {
         if (!isset($this->templates[$name])) {
-            $this->templates[$name] = $this->loadFile($name);
+            $this->templates[$name] = $this->load_file($name);
         }
-
         return $this->templates[$name];
     }
-
     /**
      * Helper function for loading a Mustache file by name.
      *
@@ -102,47 +92,41 @@ class FilesystemLoader implements Loader
      *
      * @return string Mustache Template source
      */
-    protected function loadFile($name)
+    protected function load_file($name)
     {
-        $fileName = $this->getFileName($name);
-
-        if ($this->shouldCheckPath() && !file_exists($fileName)) {
-            throw new UnknownTemplateException($name);
+        $file_name = $this->get_file_name($name);
+        if ($this->should_check_path() && !file_exists($file_name)) {
+            throw new Unknown_Template_Exception($name);
         }
-
-        return file_get_contents($fileName);
+        return file_get_contents($file_name);
     }
-
     /**
      * Helper function for getting a Mustache template file name.
      *
      *
      * @return string Template file name
      */
-    protected function getFileName(string $name)
+    protected function get_file_name(string $name)
     {
-        $fileName = $this->baseDir . '/' . $name;
-        if (substr($fileName, -strlen($this->extension)) !== $this->extension) {
-            $fileName .= $this->extension;
+        $file_name = $this->base_dir . '/' . $name;
+        if (substr($file_name, -strlen($this->extension)) !== $this->extension) {
+            $file_name .= $this->extension;
         }
-
-        $realBase = realpath($this->baseDir);
-        $realFile = realpath($fileName);
-        if ($realBase !== false && $realFile !== false && strncmp($realFile, $realBase . DIRECTORY_SEPARATOR, strlen($realBase) + 1) !== 0) {
-            throw new UnknownTemplateException($name);
+        $real_base = realpath($this->base_dir);
+        $real_file = realpath($file_name);
+        if ($real_base !== false && $real_file !== false && strncmp($real_file, $real_base . DIRECTORY_SEPARATOR, strlen($real_base) + 1) !== 0) {
+            throw new Unknown_Template_Exception($name);
         }
-
-        return $fileName;
+        return $file_name;
     }
-
     /**
      * Only check if baseDir is a directory and requested templates are files if
      * baseDir is using the filesystem stream wrapper.
      *
      * @return bool Whether to check `is_dir` and `file_exists`
      */
-    protected function shouldCheckPath()
+    protected function should_check_path()
     {
-        return strpos($this->baseDir, '://') === false || strpos($this->baseDir, 'file://') === 0;
+        return strpos($this->base_dir, '://') === false || strpos($this->base_dir, 'file://') === 0;
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,11 +9,9 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache\Logger;
 
 use Mustache\Logger;
-
 /**
  * This is a simple Logger implementation that other Loggers can inherit from.
  *
@@ -24,7 +21,7 @@ use Mustache\Logger;
  * reduce boilerplate code that a simple Logger that does the same thing with
  * messages regardless of the error level has to implement.
  */
-abstract class AbstractLogger implements Logger
+abstract class Abstract_Logger implements Logger
 {
     /**
      * System is unusable.
@@ -35,7 +32,6 @@ abstract class AbstractLogger implements Logger
     {
         $this->log(Logger::EMERGENCY, $message, $context);
     }
-
     /**
      * Action must be taken immediately.
      *
@@ -48,7 +44,6 @@ abstract class AbstractLogger implements Logger
     {
         $this->log(Logger::ALERT, $message, $context);
     }
-
     /**
      * Critical conditions.
      *
@@ -60,7 +55,6 @@ abstract class AbstractLogger implements Logger
     {
         $this->log(Logger::CRITICAL, $message, $context);
     }
-
     /**
      * Runtime errors that do not require immediate action but should typically
      * be logged and monitored.
@@ -71,7 +65,6 @@ abstract class AbstractLogger implements Logger
     {
         $this->log(Logger::ERROR, $message, $context);
     }
-
     /**
      * Exceptional occurrences that are not errors.
      *
@@ -84,7 +77,6 @@ abstract class AbstractLogger implements Logger
     {
         $this->log(Logger::WARNING, $message, $context);
     }
-
     /**
      * Normal but significant events.
      *
@@ -94,7 +86,6 @@ abstract class AbstractLogger implements Logger
     {
         $this->log(Logger::NOTICE, $message, $context);
     }
-
     /**
      * Interesting events.
      *
@@ -106,7 +97,6 @@ abstract class AbstractLogger implements Logger
     {
         $this->log(Logger::INFO, $message, $context);
     }
-
     /**
      * Detailed debug information.
      *

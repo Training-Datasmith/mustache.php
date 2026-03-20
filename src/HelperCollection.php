@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,19 +9,16 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache;
 
 use Mustache\Exception\InvalidArgumentException;
-use Mustache\Exception\UnknownHelperException;
-
+use Mustache\Exception\Unknown_Helper_Exception;
 /**
  * A collection of helpers for a Mustache instance.
  */
-class HelperCollection
+class Helper_Collection
 {
     private $helpers = [];
-
     /**
      * Helper Collection constructor.
      *
@@ -37,16 +33,13 @@ class HelperCollection
         if ($helpers === null) {
             return;
         }
-
         if (!is_array($helpers) && !$helpers instanceof \Traversable) {
             throw new InvalidArgumentException('HelperCollection constructor expects an array of helpers');
         }
-
         foreach ($helpers as $name => $helper) {
             $this->add($name, $helper);
         }
     }
-
     /**
      * Magic mutator.
      *
@@ -59,7 +52,6 @@ class HelperCollection
     {
         $this->add($name, $helper);
     }
-
     /**
      * Add a helper to this collection.
      *
@@ -70,7 +62,6 @@ class HelperCollection
     {
         $this->helpers[$name] = $helper;
     }
-
     /**
      * Magic accessor.
      *
@@ -84,7 +75,6 @@ class HelperCollection
     {
         return $this->get($name);
     }
-
     /**
      * Get a helper by name.
      *
@@ -97,12 +87,10 @@ class HelperCollection
     public function get($name)
     {
         if (!$this->has($name)) {
-            throw new UnknownHelperException($name);
+            throw new Unknown_Helper_Exception($name);
         }
-
         return $this->helpers[$name];
     }
-
     /**
      * Magic isset().
      *
@@ -116,7 +104,6 @@ class HelperCollection
     {
         return $this->has($name);
     }
-
     /**
      * Check whether a given helper is present in the collection.
      *
@@ -128,7 +115,6 @@ class HelperCollection
     {
         return array_key_exists($name, $this->helpers);
     }
-
     /**
      * Magic unset().
      *
@@ -140,7 +126,6 @@ class HelperCollection
     {
         $this->remove($name);
     }
-
     /**
      * Check whether a given helper is present in the collection.
      *
@@ -151,12 +136,10 @@ class HelperCollection
     public function remove($name)
     {
         if (!$this->has($name)) {
-            throw new UnknownHelperException($name);
+            throw new Unknown_Helper_Exception($name);
         }
-
         unset($this->helpers[$name]);
     }
-
     /**
      * Clear the helper collection.
      *
@@ -166,13 +149,12 @@ class HelperCollection
     {
         $this->helpers = [];
     }
-
     /**
      * Check whether the helper collection is empty.
      *
      * @return bool True if the collection is empty
      */
-    public function isEmpty()
+    public function is_empty()
     {
         return empty($this->helpers);
     }

@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,14 +9,12 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache\Logger;
 
 use Mustache\Exception\InvalidArgumentException;
 use Mustache\Exception\LogicException;
 use Mustache\Exception\RuntimeException;
 use Mustache\Logger;
-
 /**
  * A Mustache Stream Logger.
  *
@@ -27,23 +24,12 @@ use Mustache\Logger;
  *
  * Hint: Try `php://stderr` for your stream URL.
  */
-class StreamLogger extends AbstractLogger
+class Stream_Logger extends Abstract_Logger
 {
-    protected static $levels = [
-        self::DEBUG     => 100,
-        self::INFO      => 200,
-        self::NOTICE    => 250,
-        self::WARNING   => 300,
-        self::ERROR     => 400,
-        self::CRITICAL  => 500,
-        self::ALERT     => 550,
-        self::EMERGENCY => 600,
-    ];
-
+    protected static $levels = [self::DEBUG => 100, self::INFO => 200, self::NOTICE => 250, self::WARNING => 300, self::ERROR => 400, self::CRITICAL => 500, self::ALERT => 550, self::EMERGENCY => 600];
     protected $level;
     protected $stream;
     protected $url;
-
     /**
      * @throws InvalidArgumentException if the logging level is unknown
      *
@@ -52,15 +38,13 @@ class StreamLogger extends AbstractLogger
      */
     public function __construct($stream, $level = Logger::ERROR)
     {
-        $this->setLevel($level);
-
+        $this->set_level($level);
         if (is_resource($stream)) {
             $this->stream = $stream;
         } else {
             $this->url = $stream;
         }
     }
-
     /**
      * Close stream resources.
      */
@@ -70,7 +54,6 @@ class StreamLogger extends AbstractLogger
             fclose($this->stream);
         }
     }
-
     /**
      * Set the minimum logging level.
      *
@@ -78,25 +61,22 @@ class StreamLogger extends AbstractLogger
      *
      * @param int $level The minimum logging level which will be written
      */
-    public function setLevel($level)
+    public function set_level($level)
     {
         if (!array_key_exists($level, self::$levels)) {
             throw new InvalidArgumentException(sprintf('Unexpected logging level: %s', $level));
         }
-
         $this->level = $level;
     }
-
     /**
      * Get the current minimum logging level.
      *
      * @return int
      */
-    public function getLevel()
+    public function get_level()
     {
         return $this->level;
     }
-
     /**
      * Logs with an arbitrary level.
      *
@@ -110,12 +90,10 @@ class StreamLogger extends AbstractLogger
         if (!array_key_exists($level, self::$levels)) {
             throw new InvalidArgumentException(sprintf('Unexpected logging level: %s', $level));
         }
-
         if (self::$levels[$level] >= self::$levels[$this->level]) {
-            $this->writeLog($level, $message, $context);
+            $this->write_log($level, $message, $context);
         }
     }
-
     /**
      * Write a record to the log.
      *
@@ -126,13 +104,12 @@ class StreamLogger extends AbstractLogger
      * @param string $message The log message
      * @param array  $context The log context
      */
-    protected function writeLog($level, $message, array $context = [])
+    protected function write_log($level, $message, array $context = [])
     {
         if (!is_resource($this->stream)) {
             if (!isset($this->url)) {
                 throw new LogicException('Missing stream url, the stream can not be opened. This may be caused by a premature call to close().');
             }
-
             $this->stream = fopen($this->url, 'a');
             if (!is_resource($this->stream)) {
                 // @codeCoverageIgnoreStart
@@ -140,10 +117,8 @@ class StreamLogger extends AbstractLogger
                 // @codeCoverageIgnoreEnd
             }
         }
-
-        fwrite($this->stream, self::formatLine($level, $message, $context));
+        fwrite($this->stream, self::format_line($level, $message, $context));
     }
-
     /**
      * Gets the name of the logging level.
      *
@@ -153,11 +128,10 @@ class StreamLogger extends AbstractLogger
      *
      * @return string
      */
-    protected static function getLevelName($level)
+    protected static function get_level_name($level)
     {
         return strtoupper($level);
     }
-
     /**
      * Format a log line for output.
      *
@@ -167,15 +141,10 @@ class StreamLogger extends AbstractLogger
      *
      * @return string
      */
-    protected static function formatLine($level, $message, array $context = [])
+    protected static function format_line($level, $message, array $context = [])
     {
-        return sprintf(
-            "%s: %s\n",
-            self::getLevelName($level),
-            self::interpolateMessage($message, $context)
-        );
+        return sprintf("%s: %s\n", self::get_level_name($level), self::interpolate_message($message, $context));
     }
-
     /**
      * Interpolate context values into the message placeholders.
      *
@@ -183,18 +152,16 @@ class StreamLogger extends AbstractLogger
      *
      * @return string
      */
-    protected static function interpolateMessage($message, array $context = [])
+    protected static function interpolate_message($message, array $context = [])
     {
         if (strpos($message, '{') === false) {
             return $message;
         }
-
         // build a replacement array with braces around the context keys
         $replace = [];
         foreach ($context as $key => $val) {
             $replace['{' . $key . '}'] = $val;
         }
-
         // interpolate replacement values into the the message and return
         return strtr($message, $replace);
     }

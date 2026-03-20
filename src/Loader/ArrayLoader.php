@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,12 +9,10 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache\Loader;
 
-use Mustache\Exception\UnknownTemplateException;
+use Mustache\Exception\Unknown_Template_Exception;
 use Mustache\Loader;
-
 /**
  * Mustache Template array Loader implementation.
  *
@@ -31,10 +28,9 @@ use Mustache\Loader;
  * The ArrayLoader is used internally as a partials loader by Mustache\Engine instance when an array of partials
  * is set. It can also be used as a quick-and-dirty Template loader.
  */
-class ArrayLoader implements Loader, MutableLoader
+class Array_Loader implements Loader, Mutable_Loader
 {
     private $templates;
-
     /**
      * ArrayLoader constructor.
      *
@@ -44,7 +40,6 @@ class ArrayLoader implements Loader, MutableLoader
     {
         $this->templates = $templates;
     }
-
     /**
      * Load a Template.
      *
@@ -57,27 +52,24 @@ class ArrayLoader implements Loader, MutableLoader
     public function load($name)
     {
         if (!isset($this->templates[$name])) {
-            throw new UnknownTemplateException($name);
+            throw new Unknown_Template_Exception($name);
         }
-
         return $this->templates[$name];
     }
-
     /**
      * Set an associative array of Template sources for this loader.
      */
-    public function setTemplates(array $templates)
+    public function set_templates(array $templates)
     {
         $this->templates = $templates;
     }
-
     /**
      * Set a Template source by name.
      *
      * @param string $name
      * @param string $template Mustache Template source
      */
-    public function setTemplate($name, $template)
+    public function set_template($name, $template)
     {
         $this->templates[$name] = $template;
     }

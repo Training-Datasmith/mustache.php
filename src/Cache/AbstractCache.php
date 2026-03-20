@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,14 +9,12 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache\Cache;
 
 use Mustache\Cache;
 use Mustache\Exception\InvalidArgumentException;
 use Mustache\Logger;
-use Psr\Log\LoggerInterface;
-
+use Psr\Log\Logger_Interface;
 /**
  * Abstract Mustache Cache class.
  *
@@ -25,35 +22,31 @@ use Psr\Log\LoggerInterface;
  *
  * @abstract
  */
-abstract class AbstractCache implements Cache
+abstract class Abstract_Cache implements Cache
 {
     private $logger;
-
     /**
      * Get the current logger instance.
      *
      * @return Logger|LoggerInterface
      */
-    public function getLogger()
+    public function get_logger()
     {
         return $this->logger;
     }
-
     /**
      * Set a logger instance.
      *
      * @param Logger|LoggerInterface $logger
      */
-    public function setLogger($logger = null)
+    public function set_logger($logger = null)
     {
         // n.b. this uses `is_a` to prevent a dependency on Psr\Log
-        if ($logger !== null && !$logger instanceof Logger && !is_a($logger, 'Psr\\Log\\LoggerInterface')) {
-            throw new InvalidArgumentException('Expected an instance of Mustache\\Logger or Psr\\Log\\LoggerInterface.');
+        if ($logger !== null && !$logger instanceof Logger && !is_a($logger, 'Psr\Log\LoggerInterface')) {
+            throw new InvalidArgumentException('Expected an instance of Mustache\Logger or Psr\Log\LoggerInterface.');
         }
-
         $this->logger = $logger;
     }
-
     /**
      * Add a log record if logging is enabled.
      *

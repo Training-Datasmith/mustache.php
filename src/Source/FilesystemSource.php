@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,12 +9,10 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache\Source;
 
 use Mustache\Exception\RuntimeException;
 use Mustache\Source;
-
 /**
  * Mustache template Filesystem Source.
  *
@@ -24,23 +21,21 @@ use Mustache\Source;
  * It is more suitable for production use, and is used by default in the
  * ProductionFilesystemLoader.
  */
-class FilesystemSource implements Source
+class Filesystem_Source implements Source
 {
-    private $fileName;
-    private $statProps;
+    private $file_name;
+    private $stat_props;
     private $stat;
-
     /**
      * Filesystem Source constructor.
      *
      * @param string $fileName
      */
-    public function __construct($fileName, array $statProps)
+    public function __construct($file_name, array $stat_props)
     {
-        $this->fileName = $fileName;
-        $this->statProps = $statProps;
+        $this->file_name = $file_name;
+        $this->stat_props = $stat_props;
     }
-
     /**
      * Get the Source key (used to generate the compiled class name).
      *
@@ -48,36 +43,29 @@ class FilesystemSource implements Source
      *
      * @return string
      */
-    public function getKey()
+    public function get_key()
     {
-        $chunks = [
-            'fileName' => $this->fileName,
-        ];
-
-        if (!empty($this->statProps)) {
+        $chunks = ['fileName' => $this->file_name];
+        if (!empty($this->stat_props)) {
             if (!isset($this->stat)) {
-                $this->stat = @stat($this->fileName);
+                $this->stat = @stat($this->file_name);
             }
-
             if ($this->stat === false) {
-                throw new RuntimeException(sprintf('Failed to read source file "%s".', $this->fileName));
+                throw new RuntimeException(sprintf('Failed to read source file "%s".', $this->file_name));
             }
-
-            foreach ($this->statProps as $prop) {
+            foreach ($this->stat_props as $prop) {
                 $chunks[$prop] = $this->stat[$prop];
             }
         }
-
         return json_encode($chunks);
     }
-
     /**
      * Get the template Source.
      *
      * @return string
      */
-    public function getSource()
+    public function get_source()
     {
-        return file_get_contents($this->fileName);
+        return file_get_contents($this->file_name);
     }
 }

@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,13 +9,11 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache\Loader;
 
 use Mustache\Exception\InvalidArgumentException;
-use Mustache\Exception\UnknownTemplateException;
+use Mustache\Exception\Unknown_Template_Exception;
 use Mustache\Loader;
-
 /**
  * A Mustache Template loader for inline templates.
  *
@@ -55,12 +52,11 @@ use Mustache\Loader;
  *     @@ hello
  *     Hello, {{ name }}!
  */
-class InlineLoader implements Loader
+class Inline_Loader implements Loader
 {
-    protected $fileName;
+    protected $file_name;
     protected $offset;
     protected $templates;
-
     /**
      * The InlineLoader requires a filename and offset to process templates.
      *
@@ -78,20 +74,17 @@ class InlineLoader implements Loader
      *                         This usually coincides with the `__halt_compiler`
      *                         call, and the `__COMPILER_HALT_OFFSET__`
      */
-    public function __construct($fileName, $offset)
+    public function __construct($file_name, $offset)
     {
-        if (!is_file($fileName)) {
+        if (!is_file($file_name)) {
             throw new InvalidArgumentException('InlineLoader expects a valid filename.');
         }
-
         if (!is_int($offset) || $offset < 0) {
             throw new InvalidArgumentException('InlineLoader expects a valid file offset.');
         }
-
-        $this->fileName = $fileName;
-        $this->offset   = $offset;
+        $this->file_name = $file_name;
+        $this->offset = $offset;
     }
-
     /**
      * Load a Template by name.
      *
@@ -103,26 +96,23 @@ class InlineLoader implements Loader
      */
     public function load($name)
     {
-        $this->loadTemplates();
-
+        $this->load_templates();
         if (!array_key_exists($name, $this->templates)) {
-            throw new UnknownTemplateException($name);
+            throw new Unknown_Template_Exception($name);
         }
-
         return $this->templates[$name];
     }
-
     /**
      * Parse and load templates from the end of a source file.
      */
-    protected function loadTemplates()
+    protected function load_templates()
     {
         if ($this->templates === null) {
             $this->templates = [];
-            $data = file_get_contents($this->fileName, false, null, $this->offset);
-            foreach (preg_split("/^@@(?= [\w\d\.]+$)/m", $data, -1) as $chunk) {
+            $data = file_get_contents($this->file_name, false, null, $this->offset);
+            foreach (preg_split("/^@@(?= [\\w\\d\\.]+\$)/m", $data, -1) as $chunk) {
                 if (trim($chunk) !== '') {
-                    list($name, $content)         = explode("\n", $chunk, 2);
+                    list($name, $content) = explode("\n", $chunk, 2);
                     $this->templates[trim($name)] = trim($content);
                 }
             }

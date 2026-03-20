@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,11 +9,9 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache\Loader;
 
 use Mustache\Loader;
-
 /**
  * Mustache Template string Loader implementation.
  *
@@ -29,7 +26,7 @@ use Mustache\Loader;
  *     $tpl = $m->loadTemplate('{{ foo }}');
  *     echo $tpl->render(['foo' => 'bar']); // "bar"
  */
-class StringLoader implements Loader
+class String_Loader implements Loader
 {
     /**
      * Load a Template by source.

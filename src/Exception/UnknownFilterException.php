@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,31 +9,27 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache\Exception;
 
 use Mustache\Exception;
-
 /**
  * Unknown filter exception.
  */
-class UnknownFilterException extends \UnexpectedValueException implements Exception
+class Unknown_Filter_Exception extends \UnexpectedValueException implements Exception
 {
-    protected $filterName;
-
+    protected $filter_name;
     /**
      * @param string    $filterName
      * @param Exception $previous
      */
-    public function __construct($filterName, $previous = null)
+    public function __construct($filter_name, $previous = null)
     {
-        $this->filterName = $filterName;
-        $message = sprintf('Unknown filter: %s', $filterName);
+        $this->filter_name = $filter_name;
+        $message = sprintf('Unknown filter: %s', $filter_name);
         parent::__construct($message, 0, $previous);
     }
-
-    public function getFilterName()
+    public function get_filter_name()
     {
-        return $this->filterName;
+        return $this->filter_name;
     }
 }

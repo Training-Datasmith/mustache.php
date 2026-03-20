@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,31 +9,27 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache\Exception;
 
 use Mustache\Exception;
-
 /**
  * Unknown template exception.
  */
-class UnknownTemplateException extends InvalidArgumentException implements Exception
+class Unknown_Template_Exception extends InvalidArgumentException implements Exception
 {
-    protected $templateName;
-
+    protected $template_name;
     /**
      * @param string    $templateName
      * @param Exception $previous
      */
-    public function __construct($templateName, $previous = null)
+    public function __construct($template_name, $previous = null)
     {
-        $this->templateName = $templateName;
-        $message = sprintf('Unknown template: %s', $templateName);
+        $this->template_name = $template_name;
+        $message = sprintf('Unknown template: %s', $template_name);
         parent::__construct($message, 0, $previous);
     }
-
-    public function getTemplateName()
+    public function get_template_name()
     {
-        return $this->templateName;
+        return $this->template_name;
     }
 }

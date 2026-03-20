@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,11 +9,9 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache;
 
-use Psr\Log\LoggerInterface;
-
+use Psr\Log\Logger_Interface;
 /**
  * Mustache Cache interface.
  *
@@ -30,7 +27,6 @@ interface Cache
      * @return bool indicates successfully class load
      */
     public function load($key);
-
     /**
      * Cache and load a compiled Template class.
      *
@@ -38,11 +34,10 @@ interface Cache
      * @param string $value
      */
     public function cache($key, $value);
-
     /**
      * Set a logger instance.
      *
      * @param Logger|LoggerInterface $logger
      */
-    public function setLogger($logger = null);
+    public function set_logger($logger = null);
 }

@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /*
  * This file is part of Mustache.php.
  *
@@ -10,7 +9,6 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 namespace Mustache;
 
 /**
@@ -20,12 +18,11 @@ namespace Mustache;
  * giving them access to a `render` method for rendering a string with the
  * current context.
  */
-class LambdaHelper
+class Lambda_Helper
 {
     private $mustache;
     private $context;
     private $delims;
-
     /**
      * Mustache Lambda Helper constructor.
      *
@@ -36,10 +33,9 @@ class LambdaHelper
     public function __construct(Engine $mustache, Context $context, $delims = null)
     {
         $this->mustache = $mustache;
-        $this->context  = $context;
-        $this->delims   = $delims;
+        $this->context = $context;
+        $this->delims = $delims;
     }
-
     /**
      * Render a string as a Mustache template with the current rendering context.
      *
@@ -49,13 +45,9 @@ class LambdaHelper
      */
     public function render($string)
     {
-        $value = $this->mustache
-            ->loadLambda((string) $string, $this->delims)
-            ->renderInternal($this->context);
-
-        return $this->mustache->getDoubleRenderLambdas() ? $value : $this->preventRender($value);
+        $value = $this->mustache->load_lambda((string) $string, $this->delims)->render_internal($this->context);
+        return $this->mustache->get_double_render_lambdas() ? $value : $this->prevent_render($value);
     }
-
     /**
      * Prevent rendering of a string as a Mustache template.
      *
@@ -67,11 +59,10 @@ class LambdaHelper
      *
      * @return RenderedString A RenderedString instance containing the raw value
      */
-    public function preventRender($value)
+    public function prevent_render($value)
     {
-        return new RenderedString($value);
+        return new Rendered_String($value);
     }
-
     /**
      * Render a string as a Mustache template with the current rendering context.
      *
@@ -83,7 +74,6 @@ class LambdaHelper
     {
         return $this->render($string);
     }
-
     /**
      * Get a Lambda Helper with custom delimiters.
      *
@@ -91,7 +81,7 @@ class LambdaHelper
      *
      * @return LambdaHelper
      */
-    public function withDelimiters($delims)
+    public function with_delimiters($delims)
     {
         return new self($this->mustache, $this->context, $delims);
     }
